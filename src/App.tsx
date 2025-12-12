@@ -304,156 +304,625 @@ export default function MentalHealthHub() {
     </nav>
   );
 
-  const HomePage = () => (
-    <div className="space-y-12">
-      <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-2xl p-12 text-center">
-        <h1 className="text-5xl font-bold mb-4">You Are Not Alone</h1>
-        <p className="text-xl mb-6 max-w-2xl mx-auto">
-          Mental health matters. Whether you're struggling or supporting someone
-          who is, we're here to help.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <button
-            onClick={() => setActiveTab("helplines")}
-            className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
-          >
-            Get Immediate Help
-          </button>
-          <button
-            onClick={() => setActiveTab("resources")}
-            className="bg-transparent border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition"
-          >
-            Learn More
-          </button>
-        </div>
-      </div>
+  const HomePage: React.FC = () => {
+    const [activeTab, setActiveTab] = useState("helplines");
+    const [selectedDisorder, setSelectedDisorder] = useState<number | null>(
+      null
+    );
 
-      <div className="grid md:grid-cols-3 gap-6">
-        <div className="bg-white rounded-xl p-6 shadow-md border-t-4 border-blue-500">
-          <Phone className="w-12 h-12 text-blue-500 mb-4" />
-          <h3 className="text-xl font-bold mb-2">24/7 Crisis Support</h3>
-          <p className="text-gray-600">
-            Immediate help is available. You don't have to face this alone.
-          </p>
-        </div>
-        <div className="bg-white rounded-xl p-6 shadow-md border-t-4 border-purple-500">
-          <BookOpen className="w-12 h-12 text-purple-500 mb-4" />
-          <h3 className="text-xl font-bold mb-2">Educational Resources</h3>
-          <p className="text-gray-600">
-            Learn about mental health conditions and treatment options.
-          </p>
-        </div>
-        <div className="bg-white rounded-xl p-6 shadow-md border-t-4 border-pink-500">
-          <Users className="w-12 h-12 text-pink-500 mb-4" />
-          <h3 className="text-xl font-bold mb-2">Supportive Community</h3>
-          <p className="text-gray-600">
-            Connect with others who understand what you're going through.
-          </p>
-        </div>
-      </div>
+    // Example disorders data — modify these as you want
+    const disorders = [
+      {
+        name: "Anxiety Disorders",
+        description:
+          "Anxiety disorders involve excessive fear, worry, or nervousness that can interfere with daily activities.",
+        symptoms: [
+          "Restlessness",
+          "Difficulty concentrating",
+          "Increased heart rate",
+          "Irritability",
+        ],
+        support:
+          "Support often involves therapy, lifestyle adjustments, coping strategies, and sometimes medication.",
+      },
+      {
+        name: "Depression",
+        description:
+          "Depression is a mood disorder that causes persistent feelings of sadness and loss of interest.",
+        symptoms: [
+          "Low energy",
+          "Changes in sleep",
+          "Feelings of hopelessness",
+          "Loss of motivation",
+        ],
+        support:
+          "Treatment includes therapy, medication, increased social support, and healthy lifestyle habits.",
+      },
+      {
+        name: "PTSD",
+        description:
+          "Post-traumatic stress disorder can develop after experiencing or witnessing traumatic events.",
+        symptoms: [
+          "Flashbacks",
+          "Avoidance behaviors",
+          "Nightmares",
+          "Hypervigilance",
+        ],
+        support:
+          "Trauma-informed therapy, grounding techniques, and support groups are commonly used.",
+      },
+      {
+        name: "Bipolar Disorder",
+        description:
+          "Bipolar disorder causes extreme mood swings including emotional highs (mania) and lows (depression).",
+        symptoms: [
+          "Mood swings",
+          "Increased energy during manic phases",
+          "Decreased need for sleep",
+          "Depressive episodes",
+          "Impulsive behavior",
+        ],
+        support:
+          "Treatment involves medication, psychotherapy, and lifestyle management to stabilize mood swings.",
+      },
+    ];
 
-      <div className="bg-blue-50 rounded-xl p-8">
-        <h2 className="text-3xl font-bold mb-4 text-center">
-          Mental Health Statistics
-        </h2>
-        <div className="grid md:grid-cols-4 gap-4 text-center">
-          <div>
-            <div className="text-4xl font-bold text-blue-600">1 in 5</div>
-            <div className="text-gray-600 mt-2">
-              Adults experience mental illness yearly
+    return (
+      <div className="space-y-12">
+        {/* Top Banner Section */}
+        <div className="bg-gradient-to-br from-blue-500 to-purple-600 text-white rounded-2xl p-12 text-center">
+          <h1 className="text-5xl font-bold mb-4">You Are Not Alone</h1>
+          <p className="text-xl mb-6 max-w-2xl mx-auto">
+            Mental health matters. Whether you're struggling or supporting
+            someone who is, we're here to help.
+          </p>
+          <div className="flex flex-wrap justify-center gap-4">
+            <button
+              onClick={() => setActiveTab("helplines")}
+              className="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-blue-50 transition"
+            >
+              Get Immediate Help
+            </button>
+            <button
+              onClick={() => setActiveTab("resources")}
+              className="bg-transparent border-2 border-white px-8 py-3 rounded-lg font-semibold hover:bg-white/10 transition"
+            >
+              Learn More
+            </button>
+          </div>
+        </div>
+
+        {/* Three Icon Cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="bg-white rounded-xl p-6 shadow-md border-t-4 border-blue-500">
+            <Phone className="w-12 h-12 text-blue-500 mb-4" />
+            <h3 className="text-xl font-bold mb-2">24/7 Crisis Support</h3>
+            <p className="text-gray-600">
+              Immediate help is available. You don't have to face this alone.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-md border-t-4 border-purple-500">
+            <BookOpen className="w-12 h-12 text-purple-500 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Educational Resources</h3>
+            <p className="text-gray-600">
+              Learn about mental health conditions and treatment options.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl p-6 shadow-md border-t-4 border-pink-500">
+            <Users className="w-12 h-12 text-pink-500 mb-4" />
+            <h3 className="text-xl font-bold mb-2">Supportive Community</h3>
+            <p className="text-gray-600">
+              Connect with others who understand what you're going through.
+            </p>
+          </div>
+        </div>
+
+        {/* Stats Section */}
+        <div className="bg-blue-50 rounded-xl p-8">
+          <h2 className="text-3xl font-bold mb-4 text-center">
+            Mental Health Statistics
+          </h2>
+          <div className="grid md:grid-cols-4 gap-4 text-center">
+            <div>
+              <div className="text-4xl font-bold text-blue-600">1 in 5</div>
+              <div className="text-gray-600 mt-2">
+                Adults experience mental illness yearly
+              </div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-purple-600">50%</div>
+              <div className="text-gray-600 mt-2">
+                Of mental illness begins by age 14
+              </div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-pink-600">43%</div>
+              <div className="text-gray-600 mt-2">
+                Recovery rate with proper treatment
+              </div>
+            </div>
+            <div>
+              <div className="text-4xl font-bold text-indigo-600">24/7</div>
+              <div className="text-gray-600 mt-2">Crisis support available</div>
             </div>
           </div>
-          <div>
-            <div className="text-4xl font-bold text-purple-600">50%</div>
-            <div className="text-gray-600 mt-2">
-              Of mental illness begins by age 14
-            </div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-pink-600">43%</div>
-            <div className="text-gray-600 mt-2">
-              Recovery rate with proper treatment
-            </div>
-          </div>
-          <div>
-            <div className="text-4xl font-bold text-indigo-600">24/7</div>
-            <div className="text-gray-600 mt-2">Crisis support available</div>
-          </div>
         </div>
-      </div>
-    </div>
-  );
 
-  const ResourcesPage = () => (
-    <div>
-      <h2 className="text-4xl font-bold mb-8 text-gray-800">
-        Mental Health Information
-      </h2>
-      <p className="text-lg text-gray-600 mb-8">
-        Understanding mental health conditions is the first step toward healing.
-        Select a condition below to learn more.
-      </p>
-
-      <div className="grid md:grid-cols-2 gap-6">
-        {disorders.map((disorder, idx) => (
-          <div
-            key={idx}
-            className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer"
-            onClick={() =>
-              setSelectedDisorder(selectedDisorder === idx ? null : idx)
-            }
-          >
-            <div className="p-6">
-              <div className="flex justify-between items-start mb-3">
-                <h3 className="text-2xl font-bold text-gray-800">
+        {/* Disorders Section */}
+        <div className="bg-blue-50 p-10 rounded-2xl">
+          <h2 className="text-3xl font-bold mb-6 text-center">
+            Understanding Mental Health
+          </h2>
+          <div className="grid md:grid-cols-2 gap-6">
+            {disorders.map((disorder, idx) => (
+              <div key={idx} className="bg-white rounded-xl shadow-md p-6">
+                <h3 className="text-2xl font-bold text-blue-600 mb-3">
                   {disorder.name}
                 </h3>
-                <ChevronRight
-                  className={`w-6 h-6 transition-transform ${
-                    selectedDisorder === idx ? "rotate-90" : ""
-                  }`}
-                />
-              </div>
-              <p className="text-gray-600 mb-4">{disorder.description}</p>
+                <p className="text-gray-700 mb-4">{disorder.description}</p>
 
-              {selectedDisorder === idx && (
-                <div className="mt-4 pt-4 border-t space-y-4">
-                  <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">
-                      Common Symptoms:
-                    </h4>
-                    <ul className="list-disc list-inside text-gray-600 space-y-1">
-                      {disorder.symptoms.map((symptom, i) => (
-                        <li key={i}>{symptom}</li>
-                      ))}
-                    </ul>
+                <button
+                  onClick={() =>
+                    setSelectedDisorder(selectedDisorder === idx ? null : idx)
+                  }
+                  className="text-blue-600 font-semibold hover:text-blue-800"
+                >
+                  {selectedDisorder === idx ? "Show Less" : "Learn More →"}
+                </button>
+
+                {selectedDisorder === idx && (
+                  <div className="mt-4 pt-4 border-t space-y-3">
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2">
+                        Common Symptoms:
+                      </h4>
+                      <ul className="list-disc list-inside text-gray-600 space-y-1">
+                        {disorder.symptoms.map((symptom, i) => (
+                          <li key={i}>{symptom}</li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold text-gray-800 mb-2">
+                        Treatment & Support:
+                      </h4>
+                      <p className="text-gray-600">{disorder.support}</p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="font-semibold text-gray-800 mb-2">
-                      Treatment Options:
-                    </h4>
-                    <p className="text-gray-600">{disorder.resources}</p>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // const ResourcesPage = () => (
+  //   <div>
+  //     <h2 className="text-4xl font-bold mb-8 text-gray-800">
+  //       Mental Health Information
+  //     </h2>
+  //     <p className="text-lg text-gray-600 mb-8">
+  //       Understanding mental health conditions is the first step toward healing.
+  //       Select a condition below to learn more.
+  //     </p>
+
+  //     <div className="grid md:grid-cols-2 gap-6">
+  //       {disorders.map((disorder, idx) => (
+  //         <div
+  //           key={idx}
+  //           className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition cursor-pointer"
+  //           onClick={() =>
+  //             setSelectedDisorder(selectedDisorder === idx ? null : idx)
+  //           }
+  //         >
+  //           <div className="p-6">
+  //             <div className="flex justify-between items-start mb-3">
+  //               <h3 className="text-2xl font-bold text-gray-800">
+  //                 {disorder.name}
+  //               </h3>
+  //               <ChevronRight
+  //                 className={`w-6 h-6 transition-transform ${
+  //                   selectedDisorder === idx ? "rotate-90" : ""
+  //                 }`}
+  //               />
+  //             </div>
+  //             <p className="text-gray-600 mb-4">{disorder.description}</p>
+
+  //             {selectedDisorder === idx && (
+  //               <div className="mt-4 pt-4 border-t space-y-4">
+  //                 <div>
+  //                   <h4 className="font-semibold text-gray-800 mb-2">
+  //                     Common Symptoms:
+  //                   </h4>
+  //                   <ul className="list-disc list-inside text-gray-600 space-y-1">
+  //                     {disorder.symptoms.map((symptom, i) => (
+  //                       <li key={i}>{symptom}</li>
+  //                     ))}
+  //                   </ul>
+  //                 </div>
+  //                 <div>
+  //                   <h4 className="font-semibold text-gray-800 mb-2">
+  //                     Treatment Options:
+  //                   </h4>
+  //                   <p className="text-gray-600">{disorder.resources}</p>
+  //                 </div>
+  //               </div>
+  //             )}
+  //           </div>
+  //         </div>
+  //       ))}
+  //     </div>
+
+  //     <div className="mt-8 bg-purple-50 rounded-xl p-6">
+  //       <h3 className="text-2xl font-bold mb-4 text-gray-800">
+  //         Important Reminder
+  //       </h3>
+  //       <p className="text-gray-700">
+  //         This information is for educational purposes only and should not
+  //         replace professional medical advice. If you're experiencing symptoms,
+  //         please reach out to a mental health professional for proper diagnosis
+  //         and treatment.
+  //       </p>
+  //     </div>
+  //   </div>
+  // );
+  const ResourcesTab = () => {
+    const [zipCode, setZipCode] = useState("");
+    const [searchType, setSearchType] = useState("");
+
+    const handleSearch = () => {
+      if (!zipCode) {
+        alert("Please enter a ZIP code");
+        return;
+      }
+
+      if (searchType === "therapist") {
+        window.open(
+          `https://www.psychologytoday.com/us/therapists?search=${zipCode}`,
+          "_blank"
+        );
+      } else if (searchType === "health-center") {
+        window.open(
+          `https://findahealthcenter.hrsa.gov/search?zip=${zipCode}&radius=25`,
+          "_blank"
+        );
+      }
+    };
+
+    return (
+      <div className="space-y-8">
+        <div className="text-center mb-8">
+          <BookOpen className="w-16 h-16 text-blue-600 mx-auto mb-4" />
+          <h1 className="text-4xl font-bold mb-4">Mental Health Resources</h1>
+          <p className="text-lg text-gray-600">
+            Educational materials and support information
+          </p>
+        </div>
+
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-xl shadow-lg p-8">
+          <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+            Find Local Support Near You
+          </h2>
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div>
+              <label className="block font-semibold mb-2 text-lg">
+                Enter Your ZIP Code
+              </label>
+              <input
+                type="text"
+                value={zipCode}
+                onChange={(e) => setZipCode(e.target.value)}
+                placeholder="Enter ZIP code (e.g., 10001)"
+                className="w-full border-2 border-gray-300 rounded-lg p-4 text-lg focus:border-blue-500 focus:outline-none"
+                maxLength={5}
+              />
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              <button
+                onClick={() => {
+                  setSearchType("therapist");
+                  handleSearch();
+                }}
+                className="bg-purple-600 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-purple-700 transition flex items-center justify-center gap-2"
+              >
+                <Users className="w-6 h-6" />
+                Find Therapists Near Me
+              </button>
+              <button
+                onClick={() => {
+                  setSearchType("health-center");
+                  handleSearch();
+                }}
+                className="bg-green-600 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-700 transition flex items-center justify-center gap-2"
+              >
+                <Phone className="w-6 h-6" />
+                Find Health Centers
+              </button>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
 
-      <div className="mt-8 bg-purple-50 rounded-xl p-6">
-        <h3 className="text-2xl font-bold mb-4 text-gray-800">
-          Important Reminder
-        </h3>
-        <p className="text-gray-700">
-          This information is for educational purposes only and should not
-          replace professional medical advice. If you're experiencing symptoms,
-          please reach out to a mental health professional for proper diagnosis
-          and treatment.
-        </p>
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-bold text-blue-700 mb-4">
+            National Organizations
+          </h2>
+          <div className="space-y-4">
+            <div className="border-l-4 border-blue-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">
+                National Alliance on Mental Illness (NAMI)
+              </h3>
+              <p className="text-gray-700">1-800-950-6264</p>
+              <a
+                href="https://www.nami.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                nami.org
+              </a>
+              <p className="text-gray-600 mt-2">
+                Advocacy, education, support, and public awareness for mental
+                health
+              </p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">
+                Anxiety & Depression Association (ADAA)
+              </h3>
+              <p className="text-gray-700">240-485-1001</p>
+              <a
+                href="https://adaa.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                adaa.org
+              </a>
+              <p className="text-gray-600 mt-2">
+                Resources for anxiety, depression, OCD, PTSD, and related
+                disorders
+              </p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">Mental Health America</h3>
+              <p className="text-gray-700">1-800-969-6642</p>
+              <a
+                href="https://www.mhanational.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                mhanational.org
+              </a>
+              <p className="text-gray-600 mt-2">
+                Free mental health screening tools and resources
+              </p>
+            </div>
+            <div className="border-l-4 border-blue-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">
+                National Institute of Mental Health (NIMH)
+              </h3>
+              <p className="text-gray-700">1-866-615-6464</p>
+              <a
+                href="https://www.nimh.nih.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 hover:underline"
+              >
+                nimh.nih.gov
+              </a>
+              <p className="text-gray-600 mt-2">
+                Research-based information on mental health disorders
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-bold text-purple-700 mb-4">
+            Specialized Support
+          </h2>
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="border-l-4 border-purple-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">Veterans Crisis Line</h3>
+              <p className="text-gray-700">1-800-273-8255 (Press 1)</p>
+              <a
+                href="https://www.veteranscrisisline.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-600 hover:underline"
+              >
+                veteranscrisisline.net
+              </a>
+            </div>
+            <div className="border-l-4 border-purple-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">Trevor Project (LGBTQ+)</h3>
+              <p className="text-gray-700">1-866-488-7386</p>
+              <a
+                href="https://www.thetrevorproject.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-600 hover:underline"
+              >
+                thetrevorproject.org
+              </a>
+            </div>
+            <div className="border-l-4 border-purple-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">
+                Postpartum Support International
+              </h3>
+              <p className="text-gray-700">1-800-944-4773</p>
+              <a
+                href="https://www.postpartum.net"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-600 hover:underline"
+              >
+                postpartum.net
+              </a>
+            </div>
+            <div className="border-l-4 border-purple-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">Substance Abuse Helpline</h3>
+              <p className="text-gray-700">1-800-662-4357</p>
+              <a
+                href="https://www.samhsa.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-purple-600 hover:underline"
+              >
+                samhsa.gov
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-bold text-green-700 mb-4">
+            Online Therapy Platforms
+          </h2>
+          <div className="space-y-4">
+            <div className="border-l-4 border-green-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">BetterHelp</h3>
+              <a
+                href="https://www.betterhelp.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-600 hover:underline"
+              >
+                betterhelp.com
+              </a>
+              <p className="text-gray-600 mt-2">
+                Online counseling with licensed therapists via video, phone, or
+                messaging
+              </p>
+            </div>
+            <div className="border-l-4 border-green-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">Talkspace</h3>
+              <a
+                href="https://www.talkspace.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-600 hover:underline"
+              >
+                talkspace.com
+              </a>
+              <p className="text-gray-600 mt-2">
+                Affordable online therapy with psychiatry options available
+              </p>
+            </div>
+            <div className="border-l-4 border-green-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">7 Cups</h3>
+              <a
+                href="https://www.7cups.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-green-600 hover:underline"
+              >
+                7cups.com
+              </a>
+              <p className="text-gray-600 mt-2">
+                Free emotional support from trained listeners, plus paid therapy
+                options
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-bold text-orange-700 mb-4">
+            Self-Help Tools & Apps
+          </h2>
+          <div className="grid md:grid-cols-3 gap-4">
+            <div className="p-4 border-2 border-orange-200 rounded-lg">
+              <h3 className="font-bold text-lg mb-2">Headspace</h3>
+              <p className="text-gray-600">
+                Meditation and mindfulness exercises
+              </p>
+            </div>
+            <div className="p-4 border-2 border-orange-200 rounded-lg">
+              <h3 className="font-bold text-lg mb-2">Calm</h3>
+              <p className="text-gray-600">
+                Sleep stories, meditation, and relaxation
+              </p>
+            </div>
+            <div className="p-4 border-2 border-orange-200 rounded-lg">
+              <h3 className="font-bold text-lg mb-2">MoodPath</h3>
+              <p className="text-gray-600">Depression and anxiety assessment</p>
+            </div>
+            <div className="p-4 border-2 border-orange-200 rounded-lg">
+              <h3 className="font-bold text-lg mb-2">Sanvello</h3>
+              <p className="text-gray-600">Mood tracking and coping tools</p>
+            </div>
+            <div className="p-4 border-2 border-orange-200 rounded-lg">
+              <h3 className="font-bold text-lg mb-2">What's Up</h3>
+              <p className="text-gray-600">CBT and ACT-based coping methods</p>
+            </div>
+            <div className="p-4 border-2 border-orange-200 rounded-lg">
+              <h3 className="font-bold text-lg mb-2">Wysa</h3>
+              <p className="text-gray-600">AI-powered mental health chatbot</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="bg-white rounded-xl shadow-md p-6">
+          <h2 className="text-2xl font-bold text-red-700 mb-4">
+            Educational Resources
+          </h2>
+          <div className="space-y-4">
+            <div className="border-l-4 border-red-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">Mental Health First Aid</h3>
+              <a
+                href="https://www.mentalhealthfirstaid.org"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:underline"
+              >
+                mentalhealthfirstaid.org
+              </a>
+              <p className="text-gray-600 mt-2">
+                Learn how to help someone experiencing a mental health crisis
+              </p>
+            </div>
+            <div className="border-l-4 border-red-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">NAMI Online Classes</h3>
+              <a
+                href="https://www.nami.org/support-education"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:underline"
+              >
+                nami.org/support-education
+              </a>
+              <p className="text-gray-600 mt-2">
+                Free courses for individuals and families affected by mental
+                illness
+              </p>
+            </div>
+            <div className="border-l-4 border-red-500 pl-4 py-2">
+              <h3 className="font-bold text-lg">MentalHealth.gov</h3>
+              <a
+                href="https://www.mentalhealth.gov"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-red-600 hover:underline"
+              >
+                mentalhealth.gov
+              </a>
+              <p className="text-gray-600 mt-2">
+                U.S. government portal for mental health information
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   const HelplinesPage = () => (
     <div>
@@ -1063,7 +1532,7 @@ export default function MentalHealthHub() {
 
       <main className="max-w-7xl mx-auto px-4 py-8">
         {activeTab === "home" && <HomePage />}
-        {activeTab === "resources" && <ResourcesPage />}
+        {activeTab === "resources" && <ResourcesTab />}
         {activeTab === "helplines" && <HelplinesPage />}
         {activeTab === "appointments" && <AppointmentsPage />}
         {activeTab === "community" && <CommunityPage />}
