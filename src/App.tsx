@@ -18,7 +18,7 @@ import logo from "./images/mental_health_logo.png";
 export default function MentalHealthHub() {
   const [activeTab, setActiveTab] = useState("home");
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [selectedDisorder, setSelectedDisorder] = useState(null);
+  const [selectedDisorder, setSelectedDisorder] = useState<number | null>(null);
   const [appointmentForm, setAppointmentForm] = useState({
     name: "",
     email: "",
@@ -27,7 +27,6 @@ export default function MentalHealthHub() {
     issue: "",
   });
   const [appointmentConfirmed, setAppointmentConfirmed] = useState(false);
-  const [confirmedDetails, setConfirmedDetails] = useState(null);
 
   // Forum state
   const [forumPosts, setForumPosts] = useState([
@@ -190,8 +189,17 @@ export default function MentalHealthHub() {
       years: "4 years stable",
     },
   ];
+  type AppointmentDetails = {
+    name: string;
+    email: string;
+    date: string;
+    time: string;
+    issue?: string;
+  };
+  const [confirmedDetails, setConfirmedDetails] =
+    useState<AppointmentDetails | null>(null);
 
-  const handleAppointmentSubmit = (e) => {
+  const handleAppointmentSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setConfirmedDetails({ ...appointmentForm });
     setAppointmentConfirmed(true);
@@ -621,8 +629,10 @@ export default function MentalHealthHub() {
         </p>
 
         <div className="grid md:grid-cols-2 gap-8">
+          {/* LEFT SIDE — FORM */}
           <div className="bg-white rounded-xl shadow-md p-8">
             <div className="space-y-4">
+              {/* NAME */}
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">
                   Full Name *
@@ -630,16 +640,18 @@ export default function MentalHealthHub() {
                 <input
                   type="text"
                   value={appointmentForm.name}
-                  onChange={(e) => {
-                    const newForm = { ...appointmentForm };
-                    newForm.name = e.target.value;
-                    setAppointmentForm(newForm);
-                  }}
+                  onChange={(e) =>
+                    setAppointmentForm({
+                      ...appointmentForm,
+                      name: e.target.value,
+                    })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="John Doe"
                 />
               </div>
 
+              {/* EMAIL */}
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">
                   Email *
@@ -647,16 +659,18 @@ export default function MentalHealthHub() {
                 <input
                   type="email"
                   value={appointmentForm.email}
-                  onChange={(e) => {
-                    const newForm = { ...appointmentForm };
-                    newForm.email = e.target.value;
-                    setAppointmentForm(newForm);
-                  }}
+                  onChange={(e) =>
+                    setAppointmentForm({
+                      ...appointmentForm,
+                      email: e.target.value,
+                    })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="john@example.com"
                 />
               </div>
 
+              {/* DATE */}
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">
                   Preferred Date *
@@ -664,26 +678,29 @@ export default function MentalHealthHub() {
                 <input
                   type="date"
                   value={appointmentForm.date}
-                  onChange={(e) => {
-                    const newForm = { ...appointmentForm };
-                    newForm.date = e.target.value;
-                    setAppointmentForm(newForm);
-                  }}
+                  onChange={(e) =>
+                    setAppointmentForm({
+                      ...appointmentForm,
+                      date: e.target.value,
+                    })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
               </div>
 
+              {/* TIME */}
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">
                   Preferred Time *
                 </label>
                 <select
                   value={appointmentForm.time}
-                  onChange={(e) => {
-                    const newForm = { ...appointmentForm };
-                    newForm.time = e.target.value;
-                    setAppointmentForm(newForm);
-                  }}
+                  onChange={(e) =>
+                    setAppointmentForm({
+                      ...appointmentForm,
+                      time: e.target.value,
+                    })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 >
                   <option value="">Select a time</option>
@@ -695,23 +712,37 @@ export default function MentalHealthHub() {
                 </select>
               </div>
 
+              {/* ISSUE */}
               <div>
                 <label className="block text-gray-700 font-semibold mb-2">
                   Reason for Visit
                 </label>
                 <textarea
                   value={appointmentForm.issue}
-                  onChange={(e) => {
-                    const newForm = { ...appointmentForm };
-                    newForm.issue = e.target.value;
-                    setAppointmentForm(newForm);
-                  }}
+                  onChange={(e) =>
+                    setAppointmentForm({
+                      ...appointmentForm,
+                      issue: e.target.value,
+                    })
+                  }
                   className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24"
                   placeholder="Optional: Briefly describe what you'd like help with"
                 />
               </div>
 
+              {/* SUBMIT BUTTON */}
               <button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleAppointmentSubmit(
+                    e as unknown as React.FormEvent<HTMLFormElement>
+                  );
+                }}
+              >
+                Submit
+              </button>
+
+              {/* <button
                 onClick={handleAppointmentSubmit}
                 disabled={
                   !appointmentForm.name ||
@@ -722,10 +753,11 @@ export default function MentalHealthHub() {
                 className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
               >
                 Request Appointment
-              </button>
+              </button> */}
             </div>
           </div>
 
+          {/* RIGHT SIDE — INFO BOXES */}
           <div className="space-y-6">
             <div className="bg-blue-50 rounded-xl p-6">
               <h3 className="text-xl font-bold mb-3 text-gray-800">
@@ -734,7 +766,7 @@ export default function MentalHealthHub() {
               <ul className="space-y-2 text-gray-700">
                 <li className="flex items-start">
                   <ChevronRight className="w-5 h-5 mt-1 text-blue-600 flex-shrink-0" />
-                  <span>First sessions typically last 50-60 minutes</span>
+                  <span>First sessions typically last 50–60 minutes</span>
                 </li>
                 <li className="flex items-start">
                   <ChevronRight className="w-5 h-5 mt-1 text-blue-600 flex-shrink-0" />
