@@ -996,272 +996,310 @@ export default function MentalHealthHub() {
     </div>
   );
 
-  const AppointmentConfirmationPage = () => (
-    <div className="max-w-3xl mx-auto">
-      <div className="bg-white rounded-xl shadow-lg p-8 text-center">
-        <div className="mb-6">
-          <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-4" />
-          <h2 className="text-4xl font-bold text-gray-800 mb-4">
-            Appointment Request Confirmed!
-          </h2>
-          <p className="text-lg text-gray-600">
-            Thank you for taking this important step toward better mental
-            health.
-          </p>
-        </div>
+  // const AppointmentConfirmationPage = () => (
+  //   <div className="max-w-3xl mx-auto">
+  //     <div className="bg-white rounded-xl shadow-lg p-8 text-center">
+  //       <div className="mb-6">
+  //         <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-4" />
+  //         <h2 className="text-4xl font-bold text-gray-800 mb-4">
+  //           Appointment Request Confirmed!
+  //         </h2>
+  //         <p className="text-lg text-gray-600">
+  //           Thank you for taking this important step toward better mental
+  //           health.
+  //         </p>
+  //       </div>
 
-        <div className="bg-blue-50 rounded-xl p-6 mb-6 text-left">
-          <h3 className="text-xl font-bold text-gray-800 mb-4">
-            Appointment Details:
-          </h3>
-          <div className="space-y-3">
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Name:</span>
-              <span className="text-gray-600">{confirmedDetails?.name}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Email:</span>
-              <span className="text-gray-600">{confirmedDetails?.email}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Date:</span>
-              <span className="text-gray-600">{confirmedDetails?.date}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-semibold text-gray-700">Time:</span>
-              <span className="text-gray-600">{confirmedDetails?.time}</span>
-            </div>
+  //       <div className="bg-blue-50 rounded-xl p-6 mb-6 text-left">
+  //         <h3 className="text-xl font-bold text-gray-800 mb-4">
+  //           Appointment Details:
+  //         </h3>
+  //         <div className="space-y-3">
+  //           <div className="flex justify-between">
+  //             <span className="font-semibold text-gray-700">Name:</span>
+  //             <span className="text-gray-600">{confirmedDetails?.name}</span>
+  //           </div>
+  //           <div className="flex justify-between">
+  //             <span className="font-semibold text-gray-700">Email:</span>
+  //             <span className="text-gray-600">{confirmedDetails?.email}</span>
+  //           </div>
+  //           <div className="flex justify-between">
+  //             <span className="font-semibold text-gray-700">Date:</span>
+  //             <span className="text-gray-600">{confirmedDetails?.date}</span>
+  //           </div>
+  //           <div className="flex justify-between">
+  //             <span className="font-semibold text-gray-700">Time:</span>
+  //             <span className="text-gray-600">{confirmedDetails?.time}</span>
+  //           </div>
+  //           {confirmedDetails?.issue && (
+  //             <div className="pt-3 border-t">
+  //               <span className="font-semibold text-gray-700 block mb-2">
+  //                 Reason for Visit:
+  //               </span>
+  //               <span className="text-gray-600">{confirmedDetails.issue}</span>
+  //             </div>
+  //           )}
+  //         </div>
+  //       </div>
+
+  //       <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6 text-left">
+  //         <h4 className="font-bold text-gray-800 mb-2">What Happens Next?</h4>
+  //         <ul className="text-gray-700 space-y-2 text-sm">
+  //           <li>
+  //             • You will receive a confirmation email at{" "}
+  //             {confirmedDetails?.email} within 24 hours
+  //           </li>
+  //           <li>
+  //             • A licensed counselor will contact you to confirm the appointment
+  //             details
+  //           </li>
+  //           <li>
+  //             • If you need to reschedule, you can reply to the confirmation
+  //             email
+  //           </li>
+  //           <li>
+  //             • Prepare any questions or concerns you'd like to discuss during
+  //             your session
+  //           </li>
+  //         </ul>
+  //       </div>
+
+  //       <div className="flex flex-col sm:flex-row gap-4 justify-center">
+  //         <button
+  //           onClick={() => setActiveTab("home")}
+  //           className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+  //         >
+  //           Return to Home
+  //         </button>
+  //         <button
+  //           onClick={handleNewAppointment}
+  //           className="bg-gray-200 text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+  //         >
+  //           Schedule Another Appointment
+  //         </button>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
+
+  const AppointmentConfirmationPage: React.FC<{
+    confirmedDetails: AppointmentDetails | null;
+    setActiveTab: (tab: string) => void;
+    handleNewAppointment: () => void;
+  }> = ({ confirmedDetails, setActiveTab, handleNewAppointment }) => (
+    <div className="max-w-3xl mx-auto mt-12">
+      <div className="bg-white rounded-xl shadow-lg p-10 text-center">
+        <CheckCircle className="w-20 h-20 text-green-500 mx-auto mb-4" />
+
+        <h2 className="text-4xl font-bold text-gray-800 mb-4">
+          Appointment Request Confirmed!
+        </h2>
+
+        <p className="text-lg text-gray-600 mb-8">
+          Thank you for taking this important step toward better mental health.
+        </p>
+
+        <div className="bg-blue-50 rounded-xl p-6 mb-8 text-left">
+          <h3 className="text-xl font-bold mb-4">Appointment Details</h3>
+
+          <div className="space-y-2">
+            <p>
+              <strong>Name:</strong> {confirmedDetails?.name}
+            </p>
+            <p>
+              <strong>Email:</strong> {confirmedDetails?.email}
+            </p>
+            <p>
+              <strong>Date:</strong> {confirmedDetails?.date}
+            </p>
+            <p>
+              <strong>Time:</strong> {confirmedDetails?.time}
+            </p>
+
             {confirmedDetails?.issue && (
-              <div className="pt-3 border-t">
-                <span className="font-semibold text-gray-700 block mb-2">
-                  Reason for Visit:
-                </span>
-                <span className="text-gray-600">{confirmedDetails.issue}</span>
-              </div>
+              <p>
+                <strong>Reason:</strong> {confirmedDetails.issue}
+              </p>
             )}
           </div>
         </div>
 
-        <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6 text-left">
-          <h4 className="font-bold text-gray-800 mb-2">What Happens Next?</h4>
-          <ul className="text-gray-700 space-y-2 text-sm">
-            <li>
-              • You will receive a confirmation email at{" "}
-              {confirmedDetails?.email} within 24 hours
-            </li>
-            <li>
-              • A licensed counselor will contact you to confirm the appointment
-              details
-            </li>
-            <li>
-              • If you need to reschedule, you can reply to the confirmation
-              email
-            </li>
-            <li>
-              • Prepare any questions or concerns you'd like to discuss during
-              your session
-            </li>
-          </ul>
-        </div>
-
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex justify-center gap-4">
           <button
             onClick={() => setActiveTab("home")}
-            className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700"
           >
-            Return to Home
+            Return Home
           </button>
+
           <button
             onClick={handleNewAppointment}
-            className="bg-gray-200 text-gray-800 px-8 py-3 rounded-lg font-semibold hover:bg-gray-300 transition"
+            className="bg-gray-200 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300"
           >
-            Schedule Another Appointment
+            Schedule Another
           </button>
         </div>
       </div>
     </div>
   );
 
-  const AppointmentsPage = () => {
+  const AppointmentsPage: React.FC = () => {
     if (appointmentConfirmed) {
-      return <AppointmentConfirmationPage />;
+      return (
+        <AppointmentConfirmationPage
+          confirmedDetails={confirmedDetails}
+          setActiveTab={setActiveTab}
+          handleNewAppointment={handleNewAppointment}
+        />
+      );
     }
 
     return (
-      <div>
-        <h2 className="text-4xl font-bold mb-4 text-gray-800">
-          Schedule Counseling Appointment
-        </h2>
-        <p className="text-lg text-gray-600 mb-8">
-          Take the first step toward better mental health. Schedule a
-          confidential consultation with a licensed counselor.
-        </p>
+      <div className="max-w-2xl mx-auto mt-12 space-y-10">
+        {/* HEADER */}
+        <div className="text-center">
+          <Calendar className="w-16 h-16 text-purple-600 mx-auto mb-4" />
+          <h1 className="text-4xl font-bold mb-4">Schedule an Appointment</h1>
+          <p className="text-lg text-gray-600">
+            Take the first step towards better mental health
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-2 gap-8">
-          {/* LEFT SIDE — FORM */}
-          <div className="bg-white rounded-xl shadow-md p-8">
-            <div className="space-y-4">
-              {/* NAME */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Full Name *
-                </label>
-                <input
-                  type="text"
-                  value={appointmentForm.name}
-                  onChange={(e) =>
-                    setAppointmentForm({
-                      ...appointmentForm,
-                      name: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="John Doe"
-                />
-              </div>
+        {/* FORM CARD */}
+        <form
+          onSubmit={handleAppointmentSubmit}
+          className="bg-white rounded-xl shadow-lg p-8 space-y-6"
+        >
+          {/* NAME */}
+          <div>
+            <label className="block font-semibold mb-2 text-lg">
+              Full Name *
+            </label>
+            <input
+              type="text"
+              value={appointmentForm.name}
+              onChange={(e) =>
+                setAppointmentForm({ ...appointmentForm, name: e.target.value })
+              }
+              className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-purple-500 focus:outline-none text-lg"
+              placeholder="John Doe"
+            />
+          </div>
 
-              {/* EMAIL */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Email *
-                </label>
-                <input
-                  type="email"
-                  value={appointmentForm.email}
-                  onChange={(e) =>
-                    setAppointmentForm({
-                      ...appointmentForm,
-                      email: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                  placeholder="john@example.com"
-                />
-              </div>
+          {/* EMAIL */}
+          <div>
+            <label className="block font-semibold mb-2 text-lg">Email *</label>
+            <input
+              type="email"
+              value={appointmentForm.email}
+              onChange={(e) =>
+                setAppointmentForm({
+                  ...appointmentForm,
+                  email: e.target.value,
+                })
+              }
+              className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-purple-500 focus:outline-none text-lg"
+              placeholder="john@example.com"
+            />
+          </div>
 
-              {/* DATE */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Preferred Date *
-                </label>
-                <input
-                  type="date"
-                  value={appointmentForm.date}
-                  onChange={(e) =>
-                    setAppointmentForm({
-                      ...appointmentForm,
-                      date: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                />
-              </div>
-
-              {/* TIME */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Preferred Time *
-                </label>
-                <select
-                  value={appointmentForm.time}
-                  onChange={(e) =>
-                    setAppointmentForm({
-                      ...appointmentForm,
-                      time: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                >
-                  <option value="">Select a time</option>
-                  <option value="9:00 AM">9:00 AM</option>
-                  <option value="11:00 AM">11:00 AM</option>
-                  <option value="1:00 PM">1:00 PM</option>
-                  <option value="3:00 PM">3:00 PM</option>
-                  <option value="5:00 PM">5:00 PM</option>
-                </select>
-              </div>
-
-              {/* ISSUE */}
-              <div>
-                <label className="block text-gray-700 font-semibold mb-2">
-                  Reason for Visit
-                </label>
-                <textarea
-                  value={appointmentForm.issue}
-                  onChange={(e) =>
-                    setAppointmentForm({
-                      ...appointmentForm,
-                      issue: e.target.value,
-                    })
-                  }
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent h-24"
-                  placeholder="Optional: Briefly describe what you'd like help with"
-                />
-              </div>
-
-              {/* SUBMIT BUTTON */}
-              <button
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleAppointmentSubmit(
-                    e as unknown as React.FormEvent<HTMLFormElement>
-                  );
-                }}
-              >
-                Submit
-              </button>
-
-              {/* <button
-                onClick={handleAppointmentSubmit}
-                disabled={
-                  !appointmentForm.name ||
-                  !appointmentForm.email ||
-                  !appointmentForm.date ||
-                  !appointmentForm.time
+          {/* DATE + TIME */}
+          <div className="grid md:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold mb-2 text-lg">
+                Preferred Date *
+              </label>
+              <input
+                type="date"
+                value={appointmentForm.date}
+                onChange={(e) =>
+                  setAppointmentForm({
+                    ...appointmentForm,
+                    date: e.target.value,
+                  })
                 }
-                className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-gray-300 disabled:cursor-not-allowed"
+                className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-purple-500 focus:outline-none text-lg"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold mb-2 text-lg">
+                Preferred Time *
+              </label>
+              <select
+                value={appointmentForm.time}
+                onChange={(e) =>
+                  setAppointmentForm({
+                    ...appointmentForm,
+                    time: e.target.value,
+                  })
+                }
+                className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-purple-500 focus:outline-none text-lg"
               >
-                Request Appointment
-              </button> */}
+                <option value="">Select time</option>
+                <option value="9:00 AM">Morning (9–12)</option>
+                <option value="1:00 PM">Afternoon (12–5)</option>
+                <option value="5:00 PM">Evening (5–8)</option>
+              </select>
             </div>
           </div>
 
-          {/* RIGHT SIDE — INFO BOXES */}
-          <div className="space-y-6">
-            <div className="bg-blue-50 rounded-xl p-6">
-              <h3 className="text-xl font-bold mb-3 text-gray-800">
-                What to Expect
-              </h3>
-              <ul className="space-y-2 text-gray-700">
-                <li className="flex items-start">
-                  <ChevronRight className="w-5 h-5 mt-1 text-blue-600 flex-shrink-0" />
-                  <span>First sessions typically last 50–60 minutes</span>
-                </li>
-                <li className="flex items-start">
-                  <ChevronRight className="w-5 h-5 mt-1 text-blue-600 flex-shrink-0" />
-                  <span>All sessions are completely confidential</span>
-                </li>
-                <li className="flex items-start">
-                  <ChevronRight className="w-5 h-5 mt-1 text-blue-600 flex-shrink-0" />
-                  <span>Licensed counselors with years of experience</span>
-                </li>
-                <li className="flex items-start">
-                  <ChevronRight className="w-5 h-5 mt-1 text-blue-600 flex-shrink-0" />
-                  <span>In-person and virtual options available</span>
-                </li>
-              </ul>
-            </div>
+          {/* ISSUE */}
+          <div>
+            <label className="block font-semibold mb-2 text-lg">
+              Main Concern
+            </label>
+            <textarea
+              value={appointmentForm.issue}
+              onChange={(e) =>
+                setAppointmentForm({
+                  ...appointmentForm,
+                  issue: e.target.value,
+                })
+              }
+              className="w-full border-2 border-gray-300 rounded-lg p-3 focus:border-purple-500 focus:outline-none h-32 text-lg"
+              placeholder="Briefly describe what you'd like to discuss..."
+            />
+          </div>
 
-            <div className="bg-green-50 rounded-xl p-6">
-              <h3 className="text-xl font-bold mb-3 text-gray-800">
-                Getting Started
-              </h3>
-              <p className="text-gray-700">
-                After submitting your request, our team will contact you within
-                24 hours to confirm your appointment and answer any questions
-                you may have.
-              </p>
-            </div>
+          {/* SUBMIT */}
+          <button
+            type="submit"
+            disabled={
+              !appointmentForm.name ||
+              !appointmentForm.email ||
+              !appointmentForm.date ||
+              !appointmentForm.time
+            }
+            className="w-full bg-purple-600 text-white py-4 rounded-lg font-bold text-xl hover:bg-purple-700 transition disabled:bg-gray-300"
+          >
+            Request Appointment
+          </button>
+
+          <p className="text-sm text-gray-600 text-center">
+            A licensed counselor will review your request and contact you within
+            24 hours to confirm your appointment.
+          </p>
+        </form>
+
+        {/* INFO SECTIONS */}
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="bg-blue-50 rounded-xl p-6">
+            <h3 className="text-xl font-bold mb-3">What to Expect</h3>
+            <ul className="space-y-2 text-gray-700">
+              <li>• Sessions last 50–60 minutes</li>
+              <li>• Completely confidential</li>
+              <li>• Licensed professionals</li>
+              <li>• In-person & virtual options</li>
+            </ul>
+          </div>
+
+          <div className="bg-green-50 rounded-xl p-6">
+            <h3 className="text-xl font-bold mb-3">Getting Started</h3>
+            <p className="text-gray-700">
+              Our team will contact you within 24 hours to confirm your
+              appointment.
+            </p>
           </div>
         </div>
       </div>
