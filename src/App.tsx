@@ -623,7 +623,7 @@ export default function MentalHealthHub() {
               />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-4">
+            <div className="flex justify-center">
               <button
                 onClick={() => {
                   setSearchType("therapist");
@@ -633,16 +633,6 @@ export default function MentalHealthHub() {
               >
                 <Users className="w-6 h-6" />
                 Find Therapists Near Me
-              </button>
-              <button
-                onClick={() => {
-                  setSearchType("health-center");
-                  handleSearch();
-                }}
-                className="bg-green-600 text-white py-4 px-6 rounded-lg font-bold text-lg hover:bg-green-700 transition flex items-center justify-center gap-2"
-              >
-                <Phone className="w-6 h-6" />
-                Find Health Centers
               </button>
             </div>
           </div>
